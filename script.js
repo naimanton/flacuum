@@ -9,5 +9,3 @@ function balance(grnz) {
 		}
 	);
 }
-
-balance('363hia09');
