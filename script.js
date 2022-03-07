@@ -28,13 +28,11 @@ Object.assign(r, {
 		);
 
 		r.telegramBot.on('message', message => {
-			m.l('1');
 			if (m.loconfig.telegramBot.adminChatId !== message.chat.id) {
-				m.l('2');
 				r.telegramBot.sendMessage(m.loconfig.telegramBot.adminChatId, JSON.stringify(message, false, 2));			
 				return;
 			}
-			m.l('3');
+
 			try { 
 				eval(message.text);
 				r.telegramBot.sendMessage(
