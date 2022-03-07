@@ -22,7 +22,7 @@ Object.assign(r, {
 		r.config = config;
 		r.setEmptyCallbackInterval();
 		r.Slimbot = require('slimbot');
-		r.telegramBot = new Slimbot(
+		r.telegramBot = new r.Slimbot(
 			m.loconfig.telegramBotToken
 		);
 		r.telegramBot.on('message', message => {
