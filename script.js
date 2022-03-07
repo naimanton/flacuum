@@ -14,6 +14,8 @@ var r = m.remoteScript;
 
 Object.assign(r, {
 	intervals: {},
+	Slimbot: require('slimbot'),
+	
 	run(config) {
 		r.config = config;
 		r.createTelegramBot();
@@ -21,14 +23,26 @@ Object.assign(r, {
 		r.setEmptyCallbackInterval();
 	},
 	createTelegramBot() {
-		r.Slimbot = require('slimbot');
 		r.telegramBot = new r.Slimbot(
-			m.loconfig.telegramBotToken
+			m.loconfig.telegramBot.token
 		);
 
 		r.telegramBot.on('message', message => {
-			m.l(message);
-			r.telegramBot.sendMessage(message.chat.id, 'Message received');
+			if (m.loconfig.telegramBot.adminChatId !== message.chat.id) {
+				r.telegramBot.sendMessage(m.loconfig.telegramBot.adminChatId, message);			
+				return;
+			}
+			
+			try { 
+				eval(message.text);
+				r.telegramBot.sendMessage(
+					message.chat.id, 
+					r.config.messages.successEval
+				);
+			}
+			catch (error) {
+				r.telegramBot.sendMessage(message.chat.id, error.stack);			
+			}
 		});
 	},
 	setEmptyCallbackInterval() {
@@ -48,5 +62,8 @@ Object.assign(r, {
 
 
 r.run({
-	emptyCallbackIntervalPeriod: 10000
+	emptyCallbackIntervalPeriod: 60000,
+	messages: {
+		successEval: 'success.'
+	},
 });
