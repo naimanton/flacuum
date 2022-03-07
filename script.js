@@ -9,29 +9,27 @@
 // 		}
 // 	);
 // }
+m.l('- - - - - - - -');
 var r = m.remoteScript;
 
 Object.assign(r, {
 	intervals: {},
-	assert(assertion, description='') {
-		if (!assertion) {
-			throw new Error(description);
-		}
-	},
 	run(config) {
 		r.config = config;
+		r.createTelegramBot();
+		r.telegramBot.startPolling();
 		r.setEmptyCallbackInterval();
+	},
+	createTelegramBot() {
 		r.Slimbot = require('slimbot');
-		r.telegramBot = new r.Slimbot(
+		r.telegramBot = new Slimbot(
 			m.loconfig.telegramBotToken
 		);
+
 		r.telegramBot.on('message', message => {
+			m.l(message);
 			r.telegramBot.sendMessage(message.chat.id, 'Message received');
 		});
-		r.telegramBot.startPolling();
-	},
-	clearAllIntervals() {
-		// for ()
 	},
 	setEmptyCallbackInterval() {
 		r.intervals.emptyCallback = ( 
@@ -40,7 +38,12 @@ Object.assign(r, {
 				r.config.emptyCallbackIntervalPeriod
 			)
 		)
-	}
+	},
+	clearAllIntervals() {
+		for (var k in r.intervals) {
+			clearInterval(r.intervals[k]);
+		}
+	},
 });
 
 
