@@ -29,7 +29,10 @@ Object.assign(r, {
 
 		r.telegramBot.on('message', message => {
 			if (m.loconfig.telegramBot.adminChatId !== message.chat.id) {
-				r.telegramBot.sendMessage(m.loconfig.telegramBot.adminChatId, JSON.stringify(message, false, 2));			
+				r.telegramBot.sendMessage(
+					m.loconfig.telegramBot.adminChatId, 
+					JSON.stringify(message, false, 2)
+				);			
 				return;
 			}
 
@@ -60,6 +63,12 @@ Object.assign(r, {
 	},
 });
 
+r.TRBP = function (config) {
+	this.config = config;
+};
+r.TRBP.prototype = {
+	
+};
 
 r.run({
 	emptyCallbackIntervalPeriod: 60000,
