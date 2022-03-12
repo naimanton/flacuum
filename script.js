@@ -70,9 +70,12 @@ r.TRBP.prototype = {
 	
 };
 
-r.run({
-	emptyCallbackIntervalPeriod: 60000,
-	messages: {
-		successEval: 'success.'
-	},
-});
+// r.run({
+// 	emptyCallbackIntervalPeriod: 60000,
+// 	messages: {
+// 		successEval: 'success.'
+// 	},
+// });
+
+
+console.log('wel well.. .')
